@@ -1,0 +1,73 @@
+server:
+  port: ${PORT:8081}
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  application:
+    name: hrms-backend
+
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/hrms?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}
+    username: ${SPRING_DATASOURCE_USERNAME:hrms}
+    password: ${SPRING_DATASOURCE_PASSWORD:hrms}
+
+  jpa:
+    database-platform: ${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.MySQLDialect}
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  h2:
+    console:
+      enabled: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:google-client-id-placeholder}
+            client-secret: ${GOOGLE_CLIENT_SECRET:google-client-secret-placeholder}
+            scope:
+              - email
+              - profile
+              - openid
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
+  cron:
+    secret: ${CRON_SECRET:default-cron-secret-12345}
+  biometric:
+    api-key: ${BIOMETRIC_API_KEY:default-biometric-key-12345}
+  storage:
+    upload-dir: ${STORAGE_UPLOAD_DIR:./uploads/documents}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha

@@ -1,0 +1,14 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+
+# Eclipse / IDE metadata
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+
+# Uploads / local data
+uploads/
+data/
